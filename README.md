@@ -18,10 +18,10 @@ The code combines matrix generation, Linear Complementarity Problem (LCP) solver
   Solve the LCP using an **iterative process** as an alternative to Lemke’s method.
 
 - **Law_comparison.py**  
-  Solve the LCP for a block-structured interaction matrix and compare the **empirical distribution of persistent species** to **theoretical truncated normal PDFs**.
+  Solve the LCP for a block-structured interaction matrix (using Lemke's method) and compare the **empirical distribution of persistent species** to **theoretical truncated normal PDFs**.
 
 - **Law_theory.py**  
-  Simulate and visualize **truncated distributions of species abundances** from fixed-point computations in block-structured models.
+  Simulate and visualize **truncated distributions of species abundances** from fixed-point computations in block-structured models (a way to verify that the distribution matches the histogram when we generate the solution from a normal sample).
 
 - **Theory_vs_Empirical.py**  
   Compare **fixed-point predictions** vs. **empirical estimates** of the effective parameters  
