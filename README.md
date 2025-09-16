@@ -22,5 +22,5 @@ It provides functions to generate interaction matrices by blocks and to analyze 
 Clone the repository:
 
 ```bash
-git clone https://github.com/username/project-name.git
-cd project-name
+git clone https://github.com/maxime-clenet/Block_model_AMP.git
+cd Block_model_AMP
