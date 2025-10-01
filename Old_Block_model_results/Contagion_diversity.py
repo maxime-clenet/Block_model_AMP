@@ -29,26 +29,31 @@ def heatmap_gamma2_vs_s21_gamma1(beta, r, s21_range, s11_range, s22=0.5, num_poi
     K = 2
     assert len(beta) == K and len(r) == K
 
+    # Set up the grid of interaction values we want to explore.
     s21_values = np.linspace(*s21_range, num_points)
     s11_values = np.linspace(*s11_range, num_points)
     gamma2_grid = np.zeros((num_points, num_points))
     gamma1_labels = []
 
+    # Assume zero correlations between environmental fluctuations.
     rho = np.zeros((K, K))
 
     for i, s11 in enumerate(s11_values):
         gamma1_row = []
         for j, s21 in enumerate(s21_values):
+            # Assemble the variance-covariance matrix for the current grid point.
             s = np.zeros((K, K))
             s[0, 0] = s11
             s[1, 1] = s22
             s[1, 0] = s21
             s[0, 1] = 0.0
 
+            # Solve the deterministic fixed point and keep only the persistence terms.
             _, gamma = compute_fixed_point_final(beta, s, rho, r)
             gamma2_grid[i, j] = gamma[1]  # gamma_2 as Z-axis
             if j == 0:
                 gamma1_row.append(gamma[0])
+        # Use the last computed gamma_1 as the y-axis label for the entire row.
         gamma1_labels.append(round(gamma[0], 2))
 
     plt.figure(figsize=(8, 6))
