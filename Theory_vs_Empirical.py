@@ -8,7 +8,7 @@ gamma and sigma as functions of interaction strength `s` in block-structured sys
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import truncnorm
-from Theory import compute_fixed_point
+from Benchmark.Theory import compute_fixed_point
 from Benchmark.Empirical import empirical_prop
 
 

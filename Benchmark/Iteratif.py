@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import truncnorm
 
-from Theory import compute_fixed_point
+from Benchmark.Theory import compute_fixed_point
 from Benchmark.Empirical import block_matrix
 
 # ------------------------- Parameters -------------------------

@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 from scipy.stats import truncnorm
 from lemkelcp import lemkelcp
 
-from Theory import compute_fixed_point
+from Benchmark.Theory import compute_fixed_point
 from Benchmark.Block_matrix import block_matrix
 
 

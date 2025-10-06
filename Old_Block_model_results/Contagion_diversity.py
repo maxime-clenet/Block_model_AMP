@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from Theory import compute_fixed_point_final
+from Benchmark.Theory import compute_fixed_point_final
 
 def heatmap_gamma2_vs_s21_gamma1(beta, r, s21_range, s11_range, s22=0.5, num_points=50):
     """

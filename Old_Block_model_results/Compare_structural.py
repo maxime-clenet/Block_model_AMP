@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from Theory import compute_fixed_point_final
+from Benchmark.Theory import compute_fixed_point_final
 
 def compare_structural_vs_statistical(beta, r, s_diag, s_off_values, mode="fixed_diag"):
     """
