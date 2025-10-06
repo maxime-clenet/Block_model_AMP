@@ -51,8 +51,8 @@ def plot_vs_rho_off(x_values, y_matrix, y_label, title, ax):
 
 if __name__ == "__main__":
     beta = np.array([0.5, 0.5])
-    rho_template = np.array([[0.0, 0.0], [0.0, 0.0]])
-    s = np.array([[0.5, 0.5], [0.5, 0.5]])
+    rho_template = np.array([[-0.8, 0.0], [0.0, 0.8]])
+    s = np.array([[0.5, 0.3], [0.3, 0.5]])
     r = np.array([1.0, 1.0])
 
     rho_off_values = np.linspace(-0.99, 0.99, 80)
