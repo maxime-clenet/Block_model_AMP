@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import FormatStrFormatter
 import seaborn as sns
 from Benchmark.Theory import compute_fixed_point_final
 
@@ -47,17 +48,20 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
             gamma1_grid[j, i] = gamma[0]  # gamma_1 as Z-axis
 
     plt.figure(figsize=(8, 6))
-    sns.heatmap(
+    ax = sns.heatmap(
         gamma1_grid,
         xticklabels=np.round(s12_values, 2),
         yticklabels=np.round(s21_values, 2),
-        cmap="magma",
-        cbar_kws={'label': r'$\gamma_1$'},
+        cmap="Greys_r",
+        cbar_kws={'label': r'$\gamma_i$'},
         square=True
     )
+
+    cbar = ax.collections[0].colorbar
+    cbar.ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+    cbar.ax.tick_params(labelsize=12)
     plt.xlabel(r"$s_{12}$ (Community 2 → 1)")
     plt.ylabel(r"$s_{21}$ (Community 1 → 2)")
-    plt.title(r"Heatmap of $\gamma_1$ vs $s_{12}$ and $s_{21}$")
     plt.tight_layout()
     plt.show()
 

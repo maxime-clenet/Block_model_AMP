@@ -18,14 +18,21 @@ def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         gamma_values[i] = gamma
 
     plt.figure(figsize=(8, 5))
+    line_styles = ['-', '--', '-.', ':']
     for k in range(K):
-        plt.plot(s_values, gamma_values[:, k], label=f"Block {k + 1}")
+        style = line_styles[k] if k < len(line_styles) else '-'
+        plt.plot(
+            s_values,
+            gamma_values[:, k],
+            label=f"Community {k + 1}",
+            linestyle=style,
+            color='black',
+        )
 
     plt.xlabel("Off-diagonal interaction strength (s)")
-    plt.ylabel(r"$\gamma$ (Persistence)")
-    plt.title(r"$\gamma$ vs. $s$ (Fixed diagonal)")
-    plt.legend()
-    plt.grid(True)
+    plt.ylabel(r"$\gamma_i$ (persistence)")
+    plt.legend(fontsize=13)
+    plt.grid(True, linewidth=0.4)
     plt.tight_layout()
     plt.show()
 
@@ -41,14 +48,21 @@ def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         sigma_values[i] = variance
 
     plt.figure(figsize=(8, 5))
+    line_styles = ['-', '--', '-.', ':']
     for k in range(K):
-        plt.plot(s_values, sigma_values[:, k], label=f"Block {k + 1}")
+        style = line_styles[k] if k < len(line_styles) else '-'
+        plt.plot(
+            s_values,
+            sigma_values[:, k],
+            label=f"Community {k + 1}",
+            linestyle=style,
+            color='black',
+        )
 
     plt.xlabel("Off-diagonal interaction strength (s)")
-    plt.ylabel(r"$\sigma^2$ (Variance of persistent species)")
-    plt.title(r"$\sigma$ vs. $s$ (Fixed diagonal)")
-    plt.legend()
-    plt.grid(True)
+    plt.ylabel(r"$\sigma^2_i$ (Variance)")
+    plt.legend(fontsize=13)
+    plt.grid(True, linewidth=0.4)
     plt.tight_layout()
     plt.show()
 
@@ -64,13 +78,12 @@ def plot_sigma_diff_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         variance_diff[i] = variance[0] - variance[1]
 
     plt.figure(figsize=(8, 5))
-    plt.plot(s_values, variance_diff, label="Variance Block 1 - Block 2")
+    plt.plot(s_values, variance_diff, color='black')
     plt.xlabel("Off-diagonal interaction strength (s)")
-    plt.ylabel("Variance difference")
-    plt.title("Variance difference between blocks vs s")
+    plt.ylabel(r"Variance difference $(\sigma_1^2 - \sigma_2^2)$")
     plt.axhline(0.0, color="black", linewidth=0.8, linestyle="--")
-    plt.legend()
-    plt.grid(True)
+    plt.legend(fontsize=13)
+    plt.grid(True, linewidth=0.4)
     plt.tight_layout()
     plt.show()
 

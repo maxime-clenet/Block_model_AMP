@@ -31,14 +31,21 @@ def sweep_rho11(
     return gamma_values, variance_values
 
 
-def plot_vs_rho11(x_values, y_matrix, y_label, title, ax):
+def plot_vs_rho11(x_values, y_matrix, y_label, ax):
+    line_styles = ['-', '--', '-.', ':']
     for block_idx in range(y_matrix.shape[1]):
-        ax.plot(x_values, y_matrix[:, block_idx], label=f"Block {block_idx + 1}")
+        style = line_styles[block_idx] if block_idx < len(line_styles) else '-'
+        ax.plot(
+            x_values,
+            y_matrix[:, block_idx],
+            label=f"Community {block_idx + 1}",
+            linestyle=style,
+            color='black',
+        )
     ax.set_xlabel(r"$\rho_{11}$")
     ax.set_ylabel(y_label)
-    ax.set_title(title)
     ax.grid(True, linewidth=0.4)
-    ax.legend(fontsize=12)
+    ax.legend(fontsize=13)
 
 
 if __name__ == "__main__":
@@ -55,7 +62,6 @@ if __name__ == "__main__":
         rho11_values,
         gamma_values,
         y_label=r"$\gamma_i$ (persistence)",
-        title=r"Persistence vs $\rho_{11}$",
         ax=ax_gamma,
     )
     fig_gamma.tight_layout()
@@ -65,7 +71,6 @@ if __name__ == "__main__":
         rho11_values,
         variance_values,
         y_label=r"$\sigma^2_i$ (Variance)",
-        title=r"Variance vs $\rho_{11}$",
         ax=ax_var,
     )
     fig_var.tight_layout()
