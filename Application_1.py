@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from Benchmark.Theory import compute_fixed_point_final
+from Theory import compute_fixed_point_final
 
 
 def sweep_rho11(
@@ -61,7 +61,7 @@ if __name__ == "__main__":
     plot_vs_rho11(
         rho11_values,
         gamma_values,
-        y_label=r"$\gamma_i$ (persistence)",
+        y_label=r"$\gamma_k$ (persistence)",
         ax=ax_gamma,
     )
     fig_gamma.tight_layout()
@@ -70,7 +70,7 @@ if __name__ == "__main__":
     plot_vs_rho11(
         rho11_values,
         variance_values,
-        y_label=r"$\sigma^2_i$ (Variance)",
+        y_label=r"$\hat{\sigma}^2_k$ (variance)",
         ax=ax_var,
     )
     fig_var.tight_layout()

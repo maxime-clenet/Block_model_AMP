@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import optimize
 from scipy.stats import norm, truncnorm
-from Benchmark.Theory import compute_fixed_point_final
+from Theory import compute_fixed_point_final
 
 # ------------------ Plotting Functions ------------------ #
 
@@ -30,7 +30,7 @@ def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         )
 
     plt.xlabel("Off-diagonal interaction strength (s)")
-    plt.ylabel(r"$\gamma_i$ (persistence)")
+    plt.ylabel(r"$\gamma_k$ (persistence)")
     plt.legend(fontsize=13)
     plt.grid(True, linewidth=0.4)
     plt.tight_layout()
@@ -60,7 +60,7 @@ def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         )
 
     plt.xlabel("Off-diagonal interaction strength (s)")
-    plt.ylabel(r"$\sigma^2_i$ (Variance)")
+    plt.ylabel(r"$\hat{\sigma}^2_k$ (variance)")
     plt.legend(fontsize=13)
     plt.grid(True, linewidth=0.4)
     plt.tight_layout()
@@ -80,7 +80,7 @@ def plot_sigma_diff_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
     plt.figure(figsize=(8, 5))
     plt.plot(s_values, variance_diff, color='black')
     plt.xlabel("Off-diagonal interaction strength (s)")
-    plt.ylabel(r"Variance difference $(\sigma_1^2 - \sigma_2^2)$")
+    plt.ylabel(r"Variance difference $(\hat{\sigma}_1^2 - \hat{\sigma}_2^2)$")
     plt.axhline(0.0, color="black", linewidth=0.8, linestyle="--")
     plt.legend(fontsize=13)
     plt.grid(True, linewidth=0.4)

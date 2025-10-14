@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 import seaborn as sns
-from Benchmark.Theory import compute_fixed_point_final
+from Theory import compute_fixed_point_final
 
 def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), num_points=50):
     """
@@ -48,17 +48,22 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
             gamma1_grid[j, i] = gamma[0]  # gamma_1 as Z-axis
 
     plt.figure(figsize=(8, 6))
+    vmin, vmax = 0.85, 1.0
     ax = sns.heatmap(
         gamma1_grid,
         xticklabels=np.round(s12_values, 2),
         yticklabels=np.round(s21_values, 2),
         cmap="Greys_r",
-        cbar_kws={'label': r'$\gamma_i$'},
+        vmin=vmin,
+        vmax=vmax,
+        cbar_kws={'label': r'$\gamma_k$'},
         square=True
     )
 
     cbar = ax.collections[0].colorbar
-    cbar.ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+    cbar.set_ticks(np.linspace(vmin, vmax, num=6))
+    cbar.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
+    cbar.update_ticks()
     cbar.ax.tick_params(labelsize=12)
     plt.xlabel(r"$s_{12}$ (Community 2 → 1)")
     plt.ylabel(r"$s_{21}$ (Community 1 → 2)")
