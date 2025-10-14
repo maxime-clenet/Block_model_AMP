@@ -50,7 +50,7 @@ def fixed_point_iteration(x):
 
 sol = np.zeros(n_size)
 alpha = 1.0  # Relaxation factor
-n_iterations = 50
+n_iterations = 100
 
 for _ in range(n_iterations):
     sol = alpha * fixed_point_iteration(sol) + (1 - alpha) * sol
@@ -66,14 +66,14 @@ sol_blocks = [block[block > 0] for block in sol_blocks]  # Keep only positive va
 
 # ------------------------- Plotting -------------------------
 
-x_vals = np.linspace(0, 4, 1000)
+x_vals = np.linspace(0, 3.5, 1000)
 colors = ['b', 'r', 'g', 'm', 'c', 'y']
 
 plt.figure(figsize=(12, 6))
 
 for i, block in enumerate(sol_blocks):
     plt.hist(block, bins=30, density=True, alpha=0.6,
-             color=colors[i % len(colors)], edgecolor='black', label=f"Block {i+1}")
+             color=colors[i % len(colors)], edgecolor='black', label=f"Community {i+1}")
 
 for i in range(len(beta)):
     a, b = (0 - mu_k[i]) / sigma_k[i], np.inf  # Lower bound 0, upper ∞
@@ -81,9 +81,9 @@ for i in range(len(beta)):
     plt.plot(x_vals, pdf, color=colors[i % len(colors)], linestyle='--',
              linewidth=2, label=f"Truncated Normal {i+1}")
 
-plt.xlabel("Value of $x$")
+plt.xlabel("Abundances ($u_*)")
 plt.ylabel("Density")
-plt.title("Histogram of LCP Solutions with Theoretical Distributions")
+# plt.title("Histogram of LCP Solutions with Theoretical Distributions")
 plt.legend()
 plt.tight_layout()
 plt.show()
