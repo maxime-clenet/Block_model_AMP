@@ -7,7 +7,7 @@ using elliptic Gaussian distributions and Linear Complementarity Problems (LCP).
 
 import numpy as np
 from lemkelcp import lemkelcp
-from Benchmark.Block_matrix import elliptic_normal_matrix_opti, block_matrix
+from Block_matrix import elliptic_normal_matrix_opti, block_matrix
 
 
 def zero_LCP(A, beta):
