@@ -48,7 +48,7 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
             gamma1_grid[j, i] = gamma[0]  # gamma_1 as Z-axis
 
     plt.figure(figsize=(8, 6))
-    vmin, vmax = 0.85, 1.0
+    vmin, vmax = 0.85, 0.96
     ax = sns.heatmap(
         gamma1_grid,
         xticklabels=np.round(s12_values, 2),
