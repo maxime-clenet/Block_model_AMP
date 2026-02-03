@@ -23,17 +23,14 @@ Core utility functions for matrix generation and fixed-point computations:
 ### Application Scripts
 
 #### **Figure1.py** 
-Simulates and visualizes ecosystem equilibria with comparison between theory and numerics:
+Simulates and visualizes ecosystem equilibria with comparison between theory and numerics in Figure 1:
 - Generates block-structured interaction matrices
 - Solves LCP via damped fixed-point iteration
 - Computes AMP theory predictions
 - Compares numerical solutions with theoretical truncated normal distributions
 
 #### **Application_1.py, Application_2.py, Application_3.py**
-Specialized ecosystem simulations with different parameter configurations:
-- Varying interaction strengths and block structures
-- Analysis of persistence patterns
-- Community-level abundance statistics
+Each application file relates to the application mentioned in the article. 
 
 ---
 
