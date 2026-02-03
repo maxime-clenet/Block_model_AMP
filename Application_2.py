@@ -20,7 +20,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy import optimize
 from scipy.stats import norm, truncnorm
-from Benchmark.Theory import compute_fixed_point_final
+from Functions import compute_fixed_point_final
 
 # ------------------ Plotting Functions ------------------ #
 

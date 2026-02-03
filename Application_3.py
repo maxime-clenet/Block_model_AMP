@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 import seaborn as sns
-from Benchmark.Theory import compute_fixed_point_final
+from Functions import compute_fixed_point_final
 
 def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), num_points=50):
     """

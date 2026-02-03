@@ -17,7 +17,7 @@ attempt to be a full plotting library.
 import numpy as np
 import matplotlib.pyplot as plt
 
-from Benchmark.Theory import compute_fixed_point_final
+from Functions import compute_fixed_point_final
 
 
 def sweep_rho11(
