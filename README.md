@@ -1,37 +1,83 @@
-# Block-Structured Ecological Models
+# Block-Structured Ecological Models: AMP Theory Analysis
 
-This repository provides tools to study species persistence and abundance distributions in ecosystems where species interactions are structured into blocks.  
-The code combines matrix generation, Linear Complementarity Problem (LCP) solvers, and statistical analyses to explore the dynamics of block-structured Lotka–Volterra systems.
+## Overview
+
+Code associated to the article: "Impact of a block structure on the Lotka-Volterra model", by Maxime Clenet and Mohammed-Younes Gueddari.
+
+This repository provides a comprehensive toolkit for analyzing species persistence and abundance distributions in block-structured ecosystems. The code implements **Approximate Message Passing (AMP) theory** for high-dimensional random matrix analysis combined with numerical solvers for Linear Complementarity Problems (LCP).
 
 ---
 
-## Files
+## Project Structure
 
-- **Block_matrix.py**  
-  Create block-structured interaction matrices.  
-  Blocks are parameterized by size and interaction strength to represent multiple interacting communities.
+### Core Modules
 
-- **Empirical.py**  
-  Compute persistence, variance, and mean abundance of communities by solving the LCP with the **Lemke algorithm**.
+#### **Functions.py** (Central Library)
+Core utility functions for matrix generation and fixed-point computations:
+- `elliptic_normal_matrix_opti(n, rho)`: Generate elliptic Gaussian random matrices with controlled correlation
+- `block_matrix(n_size, beta, s, rho)`: Construct block-structured interaction matrices
+- `compute_fixed_point(beta, s, rho, r)`: Solve fixed-point equations via iterative method
+- `compute_fixed_point_root(beta, s, rho, r)`: Solve fixed-point equations via root-finding
+- `compute_fixed_point_final(beta, s, rho, r)`: Compute final abundance predictions with variance estimates
 
-- **Iteratif.py**  
-  Solve the LCP using an **iterative process** as an alternative to Lemke’s method.
+### Application Scripts
 
-- **Law_comparison.py**  
-  Solve the LCP for a block-structured interaction matrix (using Lemke's method) and compare the **empirical distribution of persistent species** to **theoretical truncated normal PDFs**.
+#### **Figure1.py** ⭐ Primary Analysis
+Simulates and visualizes ecosystem equilibria with comparison between theory and numerics:
+- Generates block-structured interaction matrices
+- Solves LCP via damped fixed-point iteration
+- Computes AMP theory predictions
+- Compares numerical solutions with theoretical truncated normal distributions
 
-- **Law_theory.py**  
-  Simulate and visualize **truncated distributions of species abundances** from fixed-point computations in block-structured models (a way to verify that the distribution matches the histogram when we generate the solution from a normal sample).
+#### **Application_1.py, Application_2.py, Application_3.py**
+Specialized ecosystem simulations with different parameter configurations:
+- Varying interaction strengths and block structures
+- Analysis of persistence patterns
+- Community-level abundance statistics
 
-- **Theory_vs_Empirical.py**  
-  Compare **fixed-point predictions** vs. **empirical estimates** of the effective parameters  
-  (γ, σ) as functions of interaction strength `s` in block-structured systems.
+---
 
+## Requirements
+
+- Python 3.8+
+- NumPy
+- SciPy (scipy.optimize, scipy.stats)
+- Matplotlib
+- Seaborn (for enhanced visualizations)
+
+---
 
 ## Installation
 
-Clone the repository:
-
+### Clone the repository:
 ```bash
 git clone https://github.com/maxime-clenet/Block_model_AMP.git
 cd Block_model_AMP
+```
+
+### Install dependencies:
+```bash
+pip install numpy scipy matplotlib seaborn
+```
+---
+
+## Citation
+
+If you use this code in your research, please cite:
+
+```bibtex
+@software{clenet2026blockamp,
+  author = {Clenet, Maxime},
+  title = {Block-Structured Ecological Models: AMP Theory Analysis},
+  year = {2026},
+  url = {https://github.com/maxime-clenet/Block_model_AMP}
+}
+```
+
+## Contact
+
+For questions or issues, please contact: maxime.clenet@cefe.cnrs.fr
+
+---
+
+**Last Updated**: February 3, 2026

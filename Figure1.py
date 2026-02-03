@@ -7,12 +7,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import truncnorm
 
-from Functions import compute_fixed_point
-from Block_matrix import block_matrix
+from Functions import compute_fixed_point, block_matrix
 
 # ------------------------- Parameters -------------------------
 
-n_size = 10000                   # Size of the full matrix
+n_size = 10000                     # Size of the full matrix
 beta = np.array([0.5, 0.5])        # Block proportions
 s = np.array([[0.5, 0], [0, 0.8]]) # Standard deviations of interactions
 rho = np.array([[-0.9, 0], [0, 0]])# Correlations between interactions
@@ -81,8 +80,8 @@ for i in range(len(beta)):
     plt.plot(x_vals, pdf, color=colors[i % len(colors)], linestyle='--',
              linewidth=2, label=f"Truncated Normal {i+1}")
 
-plt.xlabel("Abundances ($u_*)")
-plt.ylabel("Density")
+plt.xlabel("Abundances ($u_*$)")
+plt.ylabel("Probability density")
 # plt.title("Histogram of LCP Solutions with Theoretical Distributions")
 plt.legend()
 plt.tight_layout()
