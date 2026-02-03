@@ -1,8 +1,20 @@
+"""
+Generate heatmaps exploring how the fixed-point persistence `gamma_k`
+depends on asymmetric off-diagonal interaction variances `s_{12}` and
+`s_{21}` for a two-block model.
+
+This script provides a single high-level function `heatmap_gamma1_vs_s12_s21`
+that constructs an `s` matrix for each pair (s12, s21), calls
+`compute_fixed_point_final(beta, s, rho, r)` to obtain the fixed-point
+quantities, and displays `gamma_1` as a heatmap. The default plotting
+style uses a reversed greyscale colormap and formats ticks for clarity.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FormatStrFormatter
 import seaborn as sns
-from Theory import compute_fixed_point_final
+from Benchmark.Theory import compute_fixed_point_final
 
 def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), num_points=50):
     """
@@ -30,23 +42,32 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
     K = 2
     assert len(beta) == K and len(r) == K
 
+    # Discretize the ranges for s12 and s21
     s12_values = np.linspace(*s12_range, num_points)
     s21_values = np.linspace(*s21_range, num_points)
+    # Preallocate grid: rows -> s21, cols -> s12
     gamma1_grid = np.zeros((num_points, num_points))
 
+    # Use zero mean interaction template (rho); only s varies here
     rho = np.zeros((K, K))
 
+    # Evaluate the fixed-point for each pair (s12, s21)
     for i, s12 in enumerate(s12_values):
         for j, s21 in enumerate(s21_values):
             s = np.zeros((K, K))
+            # set diagonal variances from s_diag tuple
             s[0, 0] = s_diag[0]
             s[1, 1] = s_diag[1]
+            # asymmetric off-diagonal entries
             s[0, 1] = s12
             s[1, 0] = s21
 
+            # compute_fixed_point_final returns (variance_array, gamma_array)
             _, gamma = compute_fixed_point_final(beta, s, rho, r)
-            gamma1_grid[j, i] = gamma[0]  # gamma_1 as Z-axis
+            # store gamma_1; note the row/col ordering for heatmap display
+            gamma1_grid[j, i] = gamma[0]
 
+    # Plot heatmap with consistent color scale for comparability
     plt.figure(figsize=(8, 6))
     vmin, vmax = 0.85, 0.96
     ax = sns.heatmap(
@@ -57,9 +78,10 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
         vmin=vmin,
         vmax=vmax,
         cbar_kws={'label': r'$\gamma_k$'},
-        square=True
+        square=True,
     )
 
+    # Format colorbar ticks and axis labels for readability
     cbar = ax.collections[0].colorbar
     cbar.set_ticks(np.linspace(vmin, vmax, num=6))
     cbar.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
