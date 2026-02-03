@@ -1,8 +1,8 @@
-# Block-Structured Ecological Models: AMP Theory Analysis
+# Approximate message passing for block-structured ecological systems
 
 ## Overview
 
-Code associated to the article: "Impact of a block structure on the Lotka-Volterra model", by Maxime Clenet and Mohammed-Younes Gueddari.
+Code associated to the article: "Approximate message passing for block-structured ecological systems", by Maxime Clenet and Mohammed-Younes Gueddari.
 
 This repository provides a comprehensive toolkit for analyzing species persistence and abundance distributions in block-structured ecosystems. The code implements **Approximate Message Passing (AMP) theory** for high-dimensional random matrix analysis combined with numerical solvers for Linear Complementarity Problems (LCP).
 
@@ -22,7 +22,7 @@ Core utility functions for matrix generation and fixed-point computations:
 
 ### Application Scripts
 
-#### **Figure1.py** ⭐ Primary Analysis
+#### **Figure1.py** 
 Simulates and visualizes ecosystem equilibria with comparison between theory and numerics:
 - Generates block-structured interaction matrices
 - Solves LCP via damped fixed-point iteration
