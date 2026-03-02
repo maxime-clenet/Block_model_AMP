@@ -55,7 +55,7 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
     for i, s12 in enumerate(s12_values):
         for j, s21 in enumerate(s21_values):
             s = np.zeros((K, K))
-            # set diagonal variances from s_diag tuple
+            # set diagonal sd from s_diag tuple
             s[0, 0] = s_diag[0]
             s[1, 1] = s_diag[1]
             # asymmetric off-diagonal entries
