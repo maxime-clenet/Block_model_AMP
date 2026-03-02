@@ -99,8 +99,8 @@ if __name__ == "__main__":
     heatmap_gamma1_vs_s12_s21(
         beta=beta,
         r=r,
-        s12_range=(0.0, 0.7),
-        s21_range=(0.0, 0.7),
-        s_diag=(0.7, 0.7),
+        s12_range=(0.0, np.sqrt(0.5)),
+        s21_range=(0.0, np.sqrt(0.5)),
+        s_diag=(np.sqrt(0.5), np.sqrt(0.5)),
         num_points=15
     )
