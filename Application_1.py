@@ -31,7 +31,7 @@ def sweep_rho11(
 
     Parameters
     - beta: 1D array-like of community weights (length K)
-    - s: KxK matrix of interaction variances
+    - s: KxK matrix of interaction SD
     - rho_template: KxK template array of interaction means; only entry
       rho_template[0,0] is modified during the sweep
     - r: 1D array-like of intrinsic growth/scale parameters

@@ -1,7 +1,7 @@
 """
 Generate heatmaps exploring how the fixed-point persistence `gamma_k`
-depends on asymmetric off-diagonal interaction variances `s_{12}` and
-`s_{21}` for a two-block model.
+depends on asymmetric off-diagonal interaction variances `s^2_{12}` and
+`s^2_{21}` for a two-block model.
 
 This script provides a single high-level function `heatmap_gamma1_vs_s12_s21`
 that constructs an `s` matrix for each pair (s12, s21), calls

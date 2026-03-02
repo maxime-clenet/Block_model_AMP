@@ -7,12 +7,12 @@ quantities (persistence `gamma_k` and abundance variance `\hat{\sigma}_k^2`) as
 returned by `compute_fixed_point_final` from `Benchmark.Theory`.
 
 Functions:
- - plot_gamma_vs_s: plots persistence `gamma_k` vs off-diagonal s
- - plot_sigma_vs_s: plots abundance variance `\hat{\sigma}_k^2` vs s
+ - plot_gamma_vs_s: plots persistence `gamma_k` vs off-diagonal s^2
+ - plot_sigma_vs_s: plots abundance variance `\hat{\sigma}_k^2` vs s^2
  - plot_sigma_diff_vs_s: plots difference between community variances
 
-The plotting functions intentionally construct an `s` matrix with identical
-off-diagonal entries and fixed diagonal entries (0.5) to explore the effect
+The plotting functions intentionally construct an S matrix with identical
+off-diagonal entries and fixed diagonal entries (0.25) to explore the effect
 of the off-diagonal interaction variance.
 """
 
@@ -31,12 +31,12 @@ def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
     - beta: list-like of community sizes/weights (length K)
     - rho: KxK array of interaction means (signed correlations)
     - r: length-K array of intrinsic growth or scale parameters
-    - s_min, s_max: range of scalar off-diagonal variances to sweep
+    - s_min, s_max: range of scalar off-diagonal SD to sweep
     - num_points: number of points in the sweep
 
     The function builds an `s` matrix for each scalar value where all
     off-diagonal entries equal the scalar and diagonal entries are fixed to
-    0.5. It calls `compute_fixed_point_final(beta, s, rho, r)` which is
+    0.25. It calls `compute_fixed_point_final(beta, s, rho, r)` which is
     expected to return (variance_array, gamma_array), and plots the gamma
     entries for each community.
     """
@@ -73,7 +73,7 @@ def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
     plt.show()
 
 def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
-    """Plot abundance variance `\hat{\sigma}_k^2` as a function of s.
+    """Plot abundance variance `\hat{\sigma}_k^2` as a function of s^2.
 
     Parameters are the same as for `plot_gamma_vs_s`.
     """
@@ -82,7 +82,7 @@ def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
     sigma_values = np.zeros((num_points, K))
 
     for i, s_scalar in enumerate(s_values):
-        # Build the s matrix (off-diagonal sweep, diagonal fixed to 0.5)
+        # Build the S matrix (off-diagonal sweep, diagonal fixed to 0.25)
         s = np.full((K, K), s_scalar)
         np.fill_diagonal(s, 0.5)
         # Extract per-community variance from fixed point
@@ -111,7 +111,7 @@ def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
 
 def plot_sigma_diff_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
     """Plot the difference in abundance variance between the first two
-    communities, i.e. \hat{\sigma}_1^2 - \hat{\sigma}_2^2, as s varies.
+    communities, i.e. \hat{\sigma}_1^2 - \hat{\sigma}_2^2, as s^2 varies.
 
     This is useful to detect parameter regimes where one community becomes
     systematically more variable than the other.
