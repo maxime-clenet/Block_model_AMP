@@ -72,8 +72,8 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
     vmin, vmax = 0.85, 0.96
     ax = sns.heatmap(
         gamma1_grid,
-        xticklabels=np.round(s12_values, 2),
-        yticklabels=np.round(s21_values, 2),
+        xticklabels=np.round(s12_values**2, 2),
+        yticklabels=np.round(s21_values**2, 2),
         cmap="Greys_r",
         vmin=vmin,
         vmax=vmax,
@@ -87,8 +87,8 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
     cbar.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
     cbar.update_ticks()
     cbar.ax.tick_params(labelsize=12)
-    plt.xlabel(r"$s_{12}$ (Community 2 → 1)")
-    plt.ylabel(r"$s_{21}$ (Community 1 → 2)")
+    plt.xlabel(r"$s^2_{12}$ (Community 2 → 1)")
+    plt.ylabel(r"$s^2_{21}$ (Community 1 → 2)")
     plt.tight_layout()
     plt.show()
 

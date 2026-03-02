@@ -58,14 +58,14 @@ def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
     for k in range(K):
         style = line_styles[k] if k < len(line_styles) else '-'
         plt.plot(
-            s_values,
+            s_values**2,
             gamma_values[:, k],
             label=f"Community {k + 1}",
             linestyle=style,
             color='black',
         )
 
-    plt.xlabel("Off-diagonal interaction variance (s)")
+    plt.xlabel("Off-diagonal interaction variance ($s^2$)")
     plt.ylabel(r"$\gamma_k$ (persistence)")
     plt.legend(fontsize=13)
     plt.grid(True, linewidth=0.4)
@@ -94,14 +94,14 @@ def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
     for k in range(K):
         style = line_styles[k] if k < len(line_styles) else '-'
         plt.plot(
-            s_values,
+            s_values**2,
             sigma_values[:, k],
             label=f"Community {k + 1}",
             linestyle=style,
             color='black',
         )
 
-    plt.xlabel("Off-diagonal interaction variance (s)")
+    plt.xlabel("Off-diagonal interaction variance ($s^2$)")
     plt.ylabel(r"$\hat{\sigma}^2_k$ (abundance variance)")
     plt.legend(fontsize=13)
     plt.grid(True, linewidth=0.4)
@@ -127,8 +127,8 @@ def plot_sigma_diff_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         variance_diff[i] = variance[0] - variance[1]
 
     plt.figure(figsize=(8, 5))
-    plt.plot(s_values, variance_diff, color='black')
-    plt.xlabel("Off-diagonal interaction variance (s)")
+    plt.plot(s_values**2, variance_diff, color='black')
+    plt.xlabel("Off-diagonal interaction variance ($s^2$)")
     plt.ylabel(r"Variance difference $(\hat{\sigma}_1^2 - \hat{\sigma}_2^2)$")
     plt.axhline(0.0, color="black", linewidth=0.8, linestyle="--")
     plt.legend(fontsize=13)
