@@ -37,7 +37,7 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
 
     Returns
     -------
-    None (displays heatmap)
+    fig : matplotlib Figure
     """
     K = 2
     assert len(beta) == K and len(r) == K
@@ -67,40 +67,61 @@ def heatmap_gamma1_vs_s12_s21(beta, r, s12_range, s21_range, s_diag=(0.5, 0.5), 
             # store gamma_1; note the row/col ordering for heatmap display
             gamma1_grid[j, i] = gamma[0]
 
-    # Plot heatmap with consistent color scale for comparability
-    plt.figure(figsize=(8, 6))
+    # Build sparse tick labels: show ~5 values evenly spaced
+    tick_step = max(1, num_points // 5)
+    x_sq = np.round(s12_values**2, 2)
+    y_sq = np.round(s21_values**2, 2)
+    x_labels = [f"{v:.2f}" if i % tick_step == 0 else "" for i, v in enumerate(x_sq)]
+    y_labels = [f"{v:.2f}" if i % tick_step == 0 else "" for i, v in enumerate(y_sq)]
+
+    fig, ax_h = plt.subplots(figsize=(6.5, 5.5))
     vmin, vmax = 0.85, 0.96
-    ax = sns.heatmap(
+    sns.heatmap(
         gamma1_grid,
-        xticklabels=np.round(s12_values**2, 2),
-        yticklabels=np.round(s21_values**2, 2),
+        xticklabels=x_labels,
+        yticklabels=y_labels,
         cmap="Greys_r",
         vmin=vmin,
         vmax=vmax,
-        cbar_kws={'label': r'$\gamma_k$'},
+        cbar_kws={'label': r'$\gamma_1$', 'shrink': 0.85},
         square=True,
+        ax=ax_h,
     )
 
-    # Format colorbar ticks and axis labels for readability
-    cbar = ax.collections[0].colorbar
-    cbar.set_ticks(np.linspace(vmin, vmax, num=6))
+    # Format colorbar ticks
+    cbar = ax_h.collections[0].colorbar
+    cbar.set_ticks(np.linspace(vmin, vmax, num=5))
     cbar.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
-    cbar.update_ticks()
-    cbar.ax.tick_params(labelsize=12)
-    plt.xlabel(r"$s^2_{12}$ (Community 2 → 1)")
-    plt.ylabel(r"$s^2_{21}$ (Community 1 → 2)")
-    plt.tight_layout()
-    plt.show()
+    cbar.ax.tick_params(labelsize=10)
+
+    ax_h.set_xlabel(r"$s^2_{12}$ (Community 2 $\to$ 1)")
+    ax_h.set_ylabel(r"$s^2_{21}$ (Community 1 $\to$ 2)")
+    ax_h.tick_params(axis='both', which='both', length=0)
+
+    return fig
 
 # Example usage:
 if __name__ == "__main__":
+    plt.rcParams.update({
+        'font.family': 'serif',
+        'mathtext.fontset': 'stix',
+        'font.size': 11,
+        'axes.labelsize': 13,
+        'xtick.labelsize': 10,
+        'ytick.labelsize': 10,
+        'axes.linewidth': 0.8,
+    })
+
     beta = [0.5, 0.5]
     r = np.array([1.0, 1.0])
-    heatmap_gamma1_vs_s12_s21(
+    fig = heatmap_gamma1_vs_s12_s21(
         beta=beta,
         r=r,
         s12_range=(0.0, np.sqrt(0.5)),
         s21_range=(0.0, np.sqrt(0.5)),
         s_diag=(np.sqrt(0.5), np.sqrt(0.5)),
-        num_points=15
+        num_points=30,
     )
+    fig.tight_layout()
+    fig.savefig("Figures/Figure4.png", dpi=300, bbox_inches='tight')
+    plt.show()

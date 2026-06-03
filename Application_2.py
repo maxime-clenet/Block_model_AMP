@@ -24,7 +24,7 @@ from Functions import compute_fixed_point_final
 
 # ------------------ Plotting Functions ------------------ #
 
-def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
+def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100, ax=None):
     """Plot persistence `gamma_k` as a function of off-diagonal variance s.
 
     Parameters
@@ -33,6 +33,7 @@ def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
     - r: length-K array of intrinsic growth or scale parameters
     - s_min, s_max: range of scalar off-diagonal SD to sweep
     - num_points: number of points in the sweep
+    - ax: optional Axes object; if None a standalone figure is created and saved
 
     The function builds an `s` matrix for each scalar value where all
     off-diagonal entries equal the scalar and diagonal entries are fixed to
@@ -53,29 +54,39 @@ def plot_gamma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         _, gamma = compute_fixed_point_final(beta, s, rho, r)
         gamma_values[i] = gamma
 
-    plt.figure(figsize=(8, 5))
+    standalone = ax is None
+    if standalone:
+        fig, ax = plt.subplots(figsize=(5, 4))
+
     line_styles = ['-', '--', '-.', ':']
     for k in range(K):
         style = line_styles[k] if k < len(line_styles) else '-'
-        plt.plot(
+        ax.plot(
             s_values**2,
             gamma_values[:, k],
             label=f"Community {k + 1}",
             linestyle=style,
             color='black',
+            linewidth=1.8,
         )
 
-    plt.xlabel("Off-diagonal interaction variance ($s^2$)")
-    plt.ylabel(r"$\gamma_k$ (persistence)")
-    plt.legend(fontsize=13)
-    plt.grid(True, linewidth=0.4)
-    plt.tight_layout()
-    plt.show()
+    ax.set_xlabel(r"$s^2$")
+    ax.set_ylabel(r"$\gamma_k$")
+    ax.legend()
+    ax.grid(True, alpha=0.3, linestyle=':', linewidth=0.5)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
 
-def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
+    if standalone:
+        fig.tight_layout()
+        fig.savefig("Figures/Figure3a.png", dpi=300, bbox_inches='tight')
+        plt.show()
+
+def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100, ax=None):
     """Plot abundance variance `\hat{\sigma}_k^2` as a function of s^2.
 
-    Parameters are the same as for `plot_gamma_vs_s`.
+    Parameters are the same as for `plot_gamma_vs_s`, plus:
+    - ax: optional Axes object; if None a standalone figure is created and saved
     """
     K = len(beta)
     s_values = np.linspace(s_min, s_max, num_points)
@@ -89,32 +100,44 @@ def plot_sigma_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         variance, _ = compute_fixed_point_final(beta, s, rho, r)
         sigma_values[i] = variance
 
-    plt.figure(figsize=(8, 5))
+    standalone = ax is None
+    if standalone:
+        fig, ax = plt.subplots(figsize=(5, 4))
+
     line_styles = ['-', '--', '-.', ':']
     for k in range(K):
         style = line_styles[k] if k < len(line_styles) else '-'
-        plt.plot(
+        ax.plot(
             s_values**2,
             sigma_values[:, k],
             label=f"Community {k + 1}",
             linestyle=style,
             color='black',
+            linewidth=1.8,
         )
 
-    plt.xlabel("Off-diagonal interaction variance ($s^2$)")
-    plt.ylabel(r"$\hat{\sigma}^2_k$ (abundance variance)")
-    plt.legend(fontsize=13)
-    plt.grid(True, linewidth=0.4)
-    plt.tight_layout()
-    plt.show()
+    ax.set_xlabel(r"$s^2$")
+    ax.set_ylabel(r"$\hat{\sigma}^2_k$")
+    ax.legend()
+    ax.grid(True, alpha=0.3, linestyle=':', linewidth=0.5)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    if standalone:
+        fig.tight_layout()
+        fig.savefig("Figures/Figure3b.png", dpi=300, bbox_inches='tight')
+        plt.show()
 
 
-def plot_sigma_diff_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
+def plot_sigma_diff_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100, ax=None):
     """Plot the difference in abundance variance between the first two
     communities, i.e. \hat{\sigma}_1^2 - \hat{\sigma}_2^2, as s^2 varies.
 
     This is useful to detect parameter regimes where one community becomes
     systematically more variable than the other.
+
+    Parameters are the same as for `plot_gamma_vs_s`, plus:
+    - ax: optional Axes object; if None a standalone figure is created and saved
     """
     s_values = np.linspace(s_min, s_max, num_points)
     variance_diff = np.zeros(num_points)
@@ -126,26 +149,41 @@ def plot_sigma_diff_vs_s(beta, rho, r, s_min=0.2, s_max=1.4, num_points=100):
         # difference between community 0 and 1 (assumes at least two communities)
         variance_diff[i] = variance[0] - variance[1]
 
-    plt.figure(figsize=(8, 5))
-    plt.plot(s_values**2, variance_diff, color='black')
-    plt.xlabel("Off-diagonal interaction variance ($s^2$)")
-    plt.ylabel(r"Variance difference $(\hat{\sigma}_1^2 - \hat{\sigma}_2^2)$")
-    plt.axhline(0.0, color="black", linewidth=0.8, linestyle="--")
-    plt.legend(fontsize=13)
-    plt.grid(True, linewidth=0.4)
-    plt.tight_layout()
-    plt.show()
+    standalone = ax is None
+    if standalone:
+        fig, ax = plt.subplots(figsize=(5, 4))
+
+    ax.plot(s_values**2, variance_diff, color='black', linewidth=1.8)
+    ax.axhline(0.0, color='black', linewidth=0.8, linestyle='--')
+    ax.set_xlabel(r"$s^2$")
+    ax.set_ylabel(r"$\hat{\sigma}_1^2 - \hat{\sigma}_2^2$")
+    ax.grid(True, alpha=0.3, linestyle=':', linewidth=0.5)
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
+
+    if standalone:
+        fig.tight_layout()
+        fig.savefig("Figures/Figure3c.png", dpi=300, bbox_inches='tight')
+        plt.show()
 
 # ------------------ Example Usage ------------------ #
 
 if __name__ == "__main__":
+    plt.rcParams.update({
+        'font.family': 'serif',
+        'mathtext.fontset': 'stix',
+        'font.size': 11,
+        'axes.labelsize': 13,
+        'xtick.labelsize': 11,
+        'ytick.labelsize': 11,
+        'legend.fontsize': 10,
+        'axes.linewidth': 0.8,
+    })
+
     beta = [0.5, 0.5]
     rho = np.array([[0.8, 0], [0, -0.8]])
     r = np.array([1, 1])
 
-    # Example usage: sweep off-diagonal variance from 0 to 0.8 and plot.
-    # These calls are intended as quick demonstrations and can be adapted
-    # to different `beta`, `rho`, and `r` configurations as needed.
-    plot_gamma_vs_s(beta, rho, r, s_min=0, s_max=0.8, num_points=30)
-    plot_sigma_vs_s(beta, rho, r, s_min=0, s_max=0.8, num_points=30)
-    plot_sigma_diff_vs_s(beta, rho, r, s_min=0, s_max=0.8, num_points=30)
+    plot_gamma_vs_s(beta, rho, r, s_min=0, s_max=0.8, num_points=80)
+    plot_sigma_vs_s(beta, rho, r, s_min=0, s_max=0.8, num_points=80)
+    plot_sigma_diff_vs_s(beta, rho, r, s_min=0, s_max=0.8, num_points=80)

@@ -90,15 +90,28 @@ def plot_vs_rho11(x_values, y_matrix, y_label, ax):
             label=f"Community {block_idx + 1}",
             linestyle=style,
             color='black',
+            linewidth=1.8,
         )
     ax.set_xlabel(r"$\rho_{11}$")
     ax.set_ylabel(y_label)
-    ax.grid(True, linewidth=0.4)
-    ax.legend(fontsize=13)
+    ax.grid(True, alpha=0.3, linestyle=':', linewidth=0.5)
+    ax.legend()
+    ax.spines['top'].set_visible(False)
+    ax.spines['right'].set_visible(False)
 
 
 if __name__ == "__main__":
-    # Minimal example demonstrating how to run the sweep and plot results.
+    plt.rcParams.update({
+        'font.family': 'serif',
+        'mathtext.fontset': 'stix',
+        'font.size': 11,
+        'axes.labelsize': 13,
+        'xtick.labelsize': 11,
+        'ytick.labelsize': 11,
+        'legend.fontsize': 10,
+        'axes.linewidth': 0.8,
+    })
+
     beta = np.array([0.5, 0.5])
     rho_template = np.array([[0.5, 0.0], [0.0, 0.0]])
     s = np.array([[0.5, 0.5], [0.5, 0.5]])
@@ -107,21 +120,23 @@ if __name__ == "__main__":
     rho11_values = np.linspace(-0.99, 0.99, 80)
     gamma_values, variance_values = sweep_rho11(beta, s, rho_template, r, rho11_values)
 
-    fig_gamma, ax_gamma = plt.subplots(figsize=(6, 4))
+    fig_gamma, ax_gamma = plt.subplots(figsize=(5, 4))
     plot_vs_rho11(
         rho11_values,
         gamma_values,
-        y_label=r"$\gamma_k$ (persistence)",
+        y_label=r"$\gamma_k$",
         ax=ax_gamma,
     )
     fig_gamma.tight_layout()
+    fig_gamma.savefig("Figures/Figure2a.png", dpi=300, bbox_inches='tight')
 
-    fig_var, ax_var = plt.subplots(figsize=(6, 4))
+    fig_var, ax_var = plt.subplots(figsize=(5, 4))
     plot_vs_rho11(
         rho11_values,
         variance_values,
-        y_label=r"$\hat{\sigma}^2_k$ (abundance variance)",
+        y_label=r"$\hat{\sigma}^2_k$",
         ax=ax_var,
     )
     fig_var.tight_layout()
+    fig_var.savefig("Figures/Figure2b.png", dpi=300, bbox_inches='tight')
     plt.show()

@@ -65,24 +65,41 @@ sol_blocks = [block[block > 0] for block in sol_blocks]  # Keep only positive va
 
 # ------------------------- Plotting -------------------------
 
-x_vals = np.linspace(0, 3.5, 1000)
-colors = ['b', 'r', 'g', 'm', 'c', 'y']
+plt.rcParams.update({
+    'font.family': 'serif',
+    'mathtext.fontset': 'stix',
+    'font.size': 11,
+    'axes.labelsize': 13,
+    'xtick.labelsize': 11,
+    'ytick.labelsize': 11,
+    'legend.fontsize': 10,
+    'axes.linewidth': 0.8,
+    'lines.linewidth': 2.0,
+})
 
-plt.figure(figsize=(12, 6))
+x_vals = np.linspace(0, 3.5, 1000)
+hist_colors = ['#a6cde8', '#fdbf6f']   # light blue, light orange
+line_colors = ['#1f78b4', '#e66101']   # dark blue, dark orange
+
+fig, ax = plt.subplots(figsize=(7, 4.5))
 
 for i, block in enumerate(sol_blocks):
-    plt.hist(block, bins=30, density=True, alpha=0.6,
-             color=colors[i % len(colors)], edgecolor='black', label=f"Community {i+1}")
+    ax.hist(block, bins=40, density=True, alpha=0.60,
+            color=hist_colors[i % len(hist_colors)], edgecolor='none',
+            label=f"Community {i + 1}")
 
 for i in range(len(beta)):
-    a, b = (0 - mu_k[i]) / sigma_k[i], np.inf  # Lower bound 0, upper ∞
-    pdf = truncnorm.pdf(x_vals, a, b, loc=mu_k[i], scale=sigma_k[i])
-    plt.plot(x_vals, pdf, color=colors[i % len(colors)], linestyle='--',
-             linewidth=2, label=f"Truncated Normal {i+1}")
+    lower_t = (0 - mu_k[i]) / sigma_k[i]
+    pdf = truncnorm.pdf(x_vals, lower_t, np.inf, loc=mu_k[i], scale=sigma_k[i])
+    ax.plot(x_vals, pdf, color=line_colors[i % len(line_colors)],
+            linestyle='-', linewidth=2.0, label=f"Theory {i + 1}")
 
-plt.xlabel("Abundances ($u_*$)")
-plt.ylabel("Probability density")
-# plt.title("Histogram of LCP Solutions with Theoretical Distributions")
-plt.legend()
-plt.tight_layout()
+ax.set_xlabel(r"Abundance $u_*$")
+ax.set_ylabel("Probability density")
+ax.spines['top'].set_visible(False)
+ax.spines['right'].set_visible(False)
+ax.grid(True, alpha=0.3, linestyle=':', linewidth=0.5)
+ax.legend(frameon=True, framealpha=0.9, edgecolor='lightgray')
+fig.tight_layout()
+fig.savefig("Figures/Figure1.png", dpi=300, bbox_inches='tight')
 plt.show()
